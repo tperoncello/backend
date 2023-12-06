@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizador de Imágenes</title>
+  <link rel="stylesheet" href="./index.css"> <!-- Agrega tu archivo CSS externo -->
+</head>
+<body>
+  <h1>Imágenes de Productos</h1>
+  <div class="container" id="imageContainer"></div>
+
+  <script src="./ProductManager.js"></script>
+  <script>
+    // Obtén la lista de productos y muestra las imágenes con título y descripción
+    const products = productManager.getProducts();
+    const imageContainer = document.getElementById('imageContainer');
+
+    products.forEach(product => {
+      // Contenedor para cada producto
+      const productContainer = document.createElement('div');
+
+      // Imagen
+      const imageElement = document.createElement('img');
+      imageElement.src = product.thumbnail;
+      imageElement.alt = product.title;
+      imageElement.classList.add('product-image'); // Agrega la clase 'product-image'
+
+      // Título
+      const titleElement = document.createElement('h2');
+      titleElement.textContent = product.title;
+
+      // Descripción
+      const descriptionElement = document.createElement('p');
+      descriptionElement.textContent = product.description;
+
+      // Agregar elementos al contenedor del producto
+      productContainer.appendChild(imageElement);
+      productContainer.appendChild(titleElement);
+      productContainer.appendChild(descriptionElement);
+
+      // Agregar el contenedor del producto al contenedor de imágenes
+      imageContainer.appendChild(productContainer);
+    });
+  </script>
+</body>
+</html>
