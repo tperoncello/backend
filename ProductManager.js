@@ -1,7 +1,10 @@
+const fs = require('fs');
+
 class ProductManager {
-  constructor() {
-    this.products = [];
-    this.productIdCounter = 1;
+  constructor(filePath) {
+    this.path = filePath;
+    this.products = this.readFromFile();
+    this.productIdCounter = this.calculateNextId();
   }
 
   addProduct(title, description, price, thumbnail, code, stock) {
@@ -29,6 +32,7 @@ class ProductManager {
     };
 
     this.products.push(product);
+    this.writeToFile();
     console.log(`Producto agregado: ${product.title}`);
   }
 
@@ -46,10 +50,57 @@ class ProductManager {
       return null; // Retorna null en lugar de undefined para consistencia
     }
   }
+
+  updateProduct(id, updatedFields) {
+    const productIndex = this.products.findIndex(product => product.id === id);
+
+    if (productIndex !== -1) {
+      // Actualizar el producto con los campos proporcionados
+      this.products[productIndex] = { ...this.products[productIndex], ...updatedFields };
+
+      // Guardar el array actualizado en el archivo
+      this.writeToFile();
+      return this.products[productIndex];
+    } else {
+      console.error("Producto no encontrado");
+      return null;
+    }
+  }
+
+  deleteProduct(id) {
+    // Filtrar los productos para excluir el producto con el id especificado
+    this.products = this.products.filter(product => product.id !== id);
+
+    // Guardar el array actualizado en el archivo
+    this.writeToFile();
+  }
+
+  // Método privado para leer desde el archivo
+  readFromFile() {
+    try {
+      const data = fs.readFileSync(this.path, 'utf-8');
+      return JSON.parse(data) || [];
+    } catch (error) {
+      // Si el archivo no existe o hay un error al leerlo, devolver un array vacío
+      return [];
+    }
+  }
+
+  // Método privado para escribir en el archivo
+  writeToFile() {
+    fs.writeFileSync(this.path, JSON.stringify(this.products, null, 2), 'utf-8');
+  }
+
+  // Método privado para calcular el próximo id basado en los productos actuales
+  calculateNextId() {
+    return this.products.reduce((maxId, product) => Math.max(maxId, product.id), 0) + 1;
+  }
 }
 
+module.exports = ProductManager;
+
 // Ejemplo de uso con productos más realistas
-const productManager = new ProductManager();
+const productManager = new ProductManager('./products.json');
 
 productManager.addProduct("Laptop", "Potente laptop para trabajo y juegos", 1200, "laptop.jpg", "LT001", 20);
 productManager.addProduct("Smartphone", "Teléfono inteligente con última tecnología", 800, "smartphone.jpg", "SP002", 50);
