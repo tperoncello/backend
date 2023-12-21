@@ -1,14 +1,19 @@
-// app.js
-
 const express = require('express');
 const app = express();
 const PORT = 3000;
 
-const ProductManager = require('./ProductManager');
-const productManager = new ProductManager('./products.json');
+// Importa la clase ProductManager
+const { productManager } = require('./ProductManager');
 
+// Define el middleware para servir archivos estáticos desde la carpeta src
 app.use(express.static('src'));
 
+// Ruta principal para enviar index.html
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/src/index.html');
+});
+
+// Ruta para obtener todos los productos
 app.get('/products', (req, res) => {
   const limit = req.query.limit;
   const products = productManager.getProducts();
@@ -16,16 +21,12 @@ app.get('/products', (req, res) => {
   res.json(limitedProducts);
 });
 
-app.get('/products/:pid', (req, res) => {
-  const productId = parseInt(req.params.pid);
-  const product = productManager.getProductById(productId);
-  if (product) {
-    res.json(product);
-  } else {
-    res.status(404).json({ error: 'Producto no encontrado' });
-  }
+// Ruta para obtener el script del cliente
+app.get('/client.js', (req, res) => {
+  res.sendFile(__dirname + '/src/client.js');
 });
 
+// Inicia el servidor
 app.listen(PORT, () => {
   console.log(`Servidor Express iniciado en el puerto http://localhost:${PORT}`);
 });
