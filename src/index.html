@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizador de Imágenes</title>
+  <link rel="stylesheet" href="./index.css"> <!-- Agrega tu archivo CSS externo -->
+</head>
+<body>
+  <h1>Imágenes de Productos</h1>
+  <div class="container" id="imageContainer"></div>
+
+  <script>
+    // Función para hacer una solicitud al servidor y obtener la lista de productos
+    async function fetchProducts() {
+      try {
+        const response = await fetch('/products');
+        const products = await response.json();
+        displayProducts(products);
+      } catch (error) {
+        console.error('Error al obtener la lista de productos:', error);
+      }
+    }
+
+    // Función para mostrar los productos en la página
+    function displayProducts(products) {
+      const imageContainer = document.getElementById('imageContainer');
+
+      // Limpia el contenedor antes de agregar nuevos productos
+      imageContainer.innerHTML = '';
+
+      products.forEach(product => {
+        // Contenedor para cada producto
+        const productContainer = document.createElement('div');
+
+        // Imagen
+        const imageElement = document.createElement('img');
+        imageElement.src = product.thumbnail;
+        imageElement.alt = product.title;
+        imageElement.classList.add('product-image'); // Agrega la clase 'product-image'
+
+        // Título
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = product.title;
+
+        // Descripción
+        const descriptionElement = document.createElement('p');
+        descriptionElement.textContent = product.description;
+
+        // Agregar elementos al contenedor del producto
+        productContainer.appendChild(imageElement);
+        productContainer.appendChild(titleElement);
+        productContainer.appendChild(descriptionElement);
+
+        // Agregar el contenedor del producto al contenedor de imágenes
+        imageContainer.appendChild(productContainer);
+      });
+    }
+
+    // Llama a la función para obtener y mostrar los productos al cargar la página
+    fetchProducts();
+  </script>
+</body>
+</html>
