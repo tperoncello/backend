@@ -1,0 +1,39 @@
+[
+    {
+      "id": 1,
+      "title": "Mermelada de Fresa",
+      "description": "Deliciosa mermelada artesanal",
+      "price": 120,
+      "img": "url_imagen_mermelada",
+      "code": "abc789",
+      "stock": 25
+    },
+    {
+      "id": 2,
+      "title": "Pasta Integral",
+      "description": "Pasta de trigo integral",
+      "price": 180,
+      "img": "url_imagen_pasta_integral",
+      "code": "xyz456",
+      "stock": 15
+    },
+    {
+      "id": 3,
+      "title": "Sopa de Verduras",
+      "description": "Sopa nutritiva con verduras frescas",
+      "price": 200,
+      "img": "url_imagen_sopa_verduras",
+      "code": "ijk321",
+      "stock": 20
+    },
+    {
+      "id": 4,
+      "title": "Galletas de Avena",
+      "description": "Galletas saludables de avena",
+      "price": 150,
+      "img": "url_imagen_galletas_avena",
+      "code": "def654",
+      "stock": 30
+    }
+  ]
+  

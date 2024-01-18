@@ -1,0 +1,29 @@
+{{#extend "layouts/main"}}
+  {{#content "body"}}
+    <h1>Listado de Productos en Tiempo Real</h1>
+    {{#each productos}}
+      <p>{{this.nombre}} - {{this.precio}}</p>
+    {{/each}}
+
+    <!-- Formulario para agregar productos en tiempo real -->
+    <form id="addProductForm">
+      <label for="productName">Nombre:</label>
+      <input type="text" id="productName" name="productName" required>
+
+      <label for="productPrice">Precio:</label>
+      <input type="text" id="productPrice" name="productPrice" required>
+
+      <button type="submit">Agregar Producto</button>
+    </form>
+
+    <!-- Formulario para eliminar productos en tiempo real -->
+    <form id="deleteProductForm">
+      <label for="productId">ID del Producto:</label>
+      <input type="text" id="productId" name="productId" required>
+
+      <button type="submit">Eliminar Producto</button>
+    </form>
+
+    <!-- Aquí puedes agregar lógica adicional para manejar los eventos del formulario -->
+  {{/content}}
+{{/extend}}

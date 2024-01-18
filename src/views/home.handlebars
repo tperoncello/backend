@@ -1,0 +1,8 @@
+{{#extend "layouts/main"}}
+  {{#content "body"}}
+    <h1>Listado de Productos</h1>
+    {{#each productos}}
+      <p>{{this.nombre}} - {{this.precio}}</p>
+    {{/each}}
+  {{/content}}
+{{/extend}}
